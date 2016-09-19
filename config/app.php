@@ -177,7 +177,11 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        /**
+         * API Components
+         */
         Dingo\Api\Provider\LaravelServiceProvider::class, //add dingo/api restful
+        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class, //authentication within Laravel using JSON Web Tokens
 
     ],
 
@@ -225,7 +229,12 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        /**
+         * API Components
+         */
+        'APIRoute'  => Dingo\Api\Facade\Route::class,
+        'API'       => Dingo\Api\Facade\API::class,
+        'JWTAuth'   => Tymon\JWTAuth\Facades\JWTAuth::class,
     ],
 
 ];
