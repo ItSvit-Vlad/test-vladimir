@@ -12,9 +12,12 @@ class Email extends Model
         'contact_id', 'email',
     ];
 
+    /**
+     * Get the contact that owns the email.
+     */
     public function contact()
     {
         return $this->belongsTo('App\Model\Contact');
     }
-    
+
 }
