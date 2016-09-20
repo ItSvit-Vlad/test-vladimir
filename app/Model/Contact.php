@@ -9,7 +9,7 @@ class Contact extends Model
     protected $table = 'contacts';
 
     protected $fillable = [
-        'user_id', 'name',
+        'user_id', 'first_name', 'last_name',
     ];
 
     /**
