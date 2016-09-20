@@ -13,20 +13,18 @@
 
 $api = app('Dingo\Api\Routing\Router');
 
-$api->version('v1', function ($api) {
+$api->version('v1',  ['prefix' => 'api'], function ($api) {
 
-    $api->group( ['middleware' => 'api.throttle', 'limit' => 105, 'expires' => 1], function ($api) {
+    $api->group( ['middleware' => 'api.throttle', 'limit' => 105, 'expires' => 1],  function ($api) {
         $api->post('login', 'App\Http\Controllers\API\AuthController@authenticate');
         $api->post('register', 'App\Http\Controllers\API\AuthController@register');
     });
 
     // All routes in here are protected and thus need a valid token
-    $api->group( ['middleware' => ['jwt.auth'], 'prefix' => 'api'], function ($api) {
+    $api->group( ['middleware' => ['jwt.auth']], function ($api) {
 
        
     });
-
-
 
 });
 
