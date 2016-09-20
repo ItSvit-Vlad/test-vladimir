@@ -2,6 +2,13 @@ body {
 	font-family: 'Pragati Narrow', sans-serif;
 	background: #fff;
 }
+.error {
+	color: #c44d58;
+	margin-bottom: 15px;
+	font-family: Arial, sans-serif;
+	font-size: 20px;
+	margin-top: -12px;
+}
 .form-control {
 	border-radius: 0;
 	box-shadow: none;
@@ -30,7 +37,7 @@ body {
 .reg-wrap .form-control {
 	font-size: 36px;
 	border: 0;
-	font-family: Arial, sans-serif;;
+	font-family: Arial, sans-serif;
 	height: 80px;
 	padding: 16px 30px;
 	margin-bottom: 20px;
@@ -53,7 +60,6 @@ body {
 }
 .login-wrap .remember {
 	font-size: 30px;
-	margin: 0;
 }
 .login-wrap .remember input {
 	display: none;
@@ -82,6 +88,19 @@ body {
 	color: #374049;
 	text-align: center;
     line-height: 1;
+}
+.pr-link {
+	color: #556270;
+	font-size: 30px;
+	font-family: Arial, sans-serif;
+	text-align: center;
+}
+.pr-link a {
+	color: #556270;
+	text-decoration: underline;
+}
+.pr-link a:hover {
+	text-decoration: none;
 }
 .cont-wrap {
 	color: #556270;
@@ -320,6 +339,9 @@ body {
 	}
 }
 @media all and (max-width: 500px){
+	.error {
+		font-size: 16px; 
+	}
 	.login-wrap .form-control,
 	.reg-wrap .form-control {
 		font-size: 20px;
@@ -336,7 +358,8 @@ body {
 		font-size: 40px;
 		padding: 0 0 20px;
 	}
-	.login-wrap .remember {
+	.login-wrap .remember,
+	.pr-link {
 		font-size: 20px;
 	}
 	.login-wrap .remember label::before {

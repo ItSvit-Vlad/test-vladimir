@@ -3,5 +3,7 @@ angular.module('testApp').controller('LoginController', [
     '$location',
     function($scope, $location){
         console.log('LoginController');
+        var loginBody = angular.element( document.body );
+        loginBody.addClass('login');
     }
 ]);
