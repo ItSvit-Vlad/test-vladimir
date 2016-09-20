@@ -1,4 +1,3 @@
-
 var testApp = angular.module("testApp", ["ngRoute","ngCookies"]);
 //
 testApp.config(['$routeProvider', '$httpProvider',function($routeProvider, $httpProvider) {
@@ -21,7 +20,7 @@ testApp.config(['$routeProvider', '$httpProvider',function($routeProvider, $http
         return {
             'request': function (config) {
                 config.headers = config.headers || {};
-                token= $cookies.get('token');
+                var token = $cookies.get('token');
                 if (token) {
                     config.headers.Authorization = 'Test ' + token;
                 }
@@ -41,13 +40,9 @@ testApp.config(['$routeProvider', '$httpProvider',function($routeProvider, $http
 
 // //Check user authentication, if true login page is not available
 testApp.run(['$rootScope', '$location', '$cookies', function($rootScope, $location, $cookies) {
-
     $rootScope.$on('$locationChangeStart', function(ev, next, current) {
-
-        var token= $cookies.get('token');
-        console.log(typeof token == 'undefined' , next.search('/dashboard'));
+        var token = $cookies.get('token');
         if(next.search('/dashboard') !== -1){
-            console.log('token', token);
             if(typeof token == 'undefined' ){
                 $location.path('/login');
             }
@@ -55,7 +50,6 @@ testApp.run(['$rootScope', '$location', '$cookies', function($rootScope, $locati
         if(token){
             $location.path('/dashboard');
         }
-
     });
 
 }]);

@@ -2,7 +2,7 @@
 
 use Dingo\Api\Http\FormRequest;
 
-class UserRequest extends FormRequest
+class UserRegisterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

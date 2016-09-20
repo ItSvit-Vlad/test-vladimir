@@ -61,8 +61,6 @@ angular.module('testApp').controller('RegisterController', [
                     }
                 }
             });
-
-
         }
     }
 ]);
