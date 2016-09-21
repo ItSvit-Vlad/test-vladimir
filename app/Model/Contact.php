@@ -26,6 +26,6 @@ class Contact extends Model
      */
     public function emails()
     {
-        return $this->hasMany('App\Model\Email','user_id');
+        return $this->hasMany('App\Model\ContactInfo','user_id');
     }
 }

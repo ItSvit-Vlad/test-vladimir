@@ -2,7 +2,8 @@ angular.module('testApp').controller('LoginController', [
     '$scope',
     '$location',
     '$http',
-    function($scope, $location, $http){
+    '$cookies',
+    function($scope, $location, $http, $cookies){
         console.log('LoginController');
         var loginBody = angular.element( document.body );
         loginBody.addClass('login');
@@ -23,7 +24,8 @@ angular.module('testApp').controller('LoginController', [
          */
         $scope.error = {
             email : [],
-            password : []
+            password : [],
+            common: [],
         };
 
         /**
@@ -49,6 +51,7 @@ angular.module('testApp').controller('LoginController', [
             }, function(response) {
 
                 var errors = response.data.errors;
+                console.log(response);
                 for (var name in errors) {
                     for (var error in errors[name]) {
                         $scope.error[name][$scope.error[name].length] = {
@@ -56,7 +59,6 @@ angular.module('testApp').controller('LoginController', [
                         }
                     }
                 }
-
             });
         }
     }

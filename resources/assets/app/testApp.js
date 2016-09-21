@@ -1,3 +1,4 @@
+
 var testApp = angular.module("testApp", ["ngRoute","ngCookies"]);
 //
 testApp.config(['$routeProvider', '$httpProvider',function($routeProvider, $httpProvider) {
@@ -22,7 +23,7 @@ testApp.config(['$routeProvider', '$httpProvider',function($routeProvider, $http
                 config.headers = config.headers || {};
                 var token = $cookies.get('token');
                 if (token) {
-                    config.headers.Authorization = 'Test ' + token;
+                    config.headers.Authorization = 'Bearer ' + token;
                 }
                 return config;
             },
