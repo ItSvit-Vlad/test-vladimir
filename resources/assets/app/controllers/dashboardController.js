@@ -2,12 +2,24 @@ angular.module('testApp').controller('DashboardController', [
     '$scope',
     '$location',
     '$http',
-    function($scope, $location, $http){
+    '$uibModal',
+
+    function($scope, $location, $http, $uibModal ){
         console.log('DashboardController');
 
+        $scope.users={};
+
+            $http({
+                method : "GET",
+                url : "api/contacts",
+            })
+            .then(function (response) {
+                console.log(response.data.data);
+                $scope.users = response.data.data;
+                console.log($scope.users);
+            });
 
 
-        var $ctrl = this;
         $scope.items = ['item1', 'item2', 'item3'];
 
         $scope.animationsEnabled = true;
@@ -17,8 +29,8 @@ angular.module('testApp').controller('DashboardController', [
                 animation: $scope.animationsEnabled,
                 ariaLabelledBy: 'modal-title',
                 ariaDescribedBy: 'modal-body',
-                templateUrl: 'myModalContent.html',
-                controller: 'ModalInstanceCtrl',
+                templateUrl: 'ModalContent.html',
+                controller: 'DashboardController',
                 controllerAs: '$ctrl',
                 size: size,
                 resolve: {
@@ -27,6 +39,12 @@ angular.module('testApp').controller('DashboardController', [
                     }
                 }
             });
+
         }
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss();
+        };
+
     }
 ]);

@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Http\Requests\API\ContactRequest;
 use App\Http\Controllers\API\ApiProtectedController;
 use App\Model\Contact;
+use App\Model\ContactInfo;
 use App\Http\Controllers\API\Transformer\ContactTransformer;
 
 class ContactsController extends ApiProtectedController
@@ -31,11 +32,29 @@ class ContactsController extends ApiProtectedController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ContactRequest $request)
+    public function store(Request $request)
     {
-        $params =$request->only(['first_name', 'last_name']);
-        $params['user_id'] = $this->user->id;
-        return Contact::create($params);
+        try{
+            $contact = new Contact;
+            $contact->user_id = $this->user->id;
+            $contact->first_name = $request->first;
+            $contact->last_name = $request->last;
+            $contact->save();
+            $emails=$request->emails;
+            if(isset($emails) && count($emails)>0 ){
+                foreach($emails as $info){
+                    if($info['email']){
+                        $params ['email'] = $info['email'];
+                        $params['contact_id'] = $contact->id;
+                        ContactInfo::create($params);
+                    }
+                }
+            }
+            $messege = ['messege' => true];
+        } catch(\Exception $e){
+            $messege = ['messege' => $e->getMessage()];
+        }
+        return $messege;
     }
 
     /**
@@ -56,11 +75,34 @@ class ContactsController extends ApiProtectedController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ContactRequest $request, $id)
+   public function update(Request $request, $id)
     {
-        $contact = Contact::where('user_id', $this->user->id)->findOrFail($id);
-        $contact->update($request->only(['first_name', 'last_name']));
-        return $contact;
+        try{
+            $contact = Contact::where('user_id', $this->user->id)->findOrFail($id);
+
+            if($contact instanceof Contact){
+                $contact->first_name = $request->first;
+                $contact->last_name = $request->last;
+                $contact->save();
+                ContactInfo::where('contact_id', $id)->delete();
+                $emails = $request->emails;
+                if(isset($emails) && count($emails>0 )){
+                      foreach($emails as $info){
+                          if($info['email']){
+                              $params ['email'] = $info['email'];
+                              $params['contact_id'] = $id;
+                              ContactInfo::create($params);
+                          }
+                      }
+                }
+            }
+
+            $messege = ['messege' => true];
+        }catch(\Exception $e){
+            $messege = ['messege' => $e->getMessage()];
+        }
+
+        return $messege;
     }
 
     /**
@@ -72,6 +114,7 @@ class ContactsController extends ApiProtectedController
     public function destroy($id)
     {
         $contact = Contact::where('user_id', $this->user->id)->findOrFail($id);
-        return $contact->destroy();
+        $contact->delete();
+        return ['message'=>true];
     }
 }

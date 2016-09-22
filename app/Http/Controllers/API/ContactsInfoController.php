@@ -8,7 +8,7 @@ use App\Http\Requests\API\ContactInfoRequest;
 use App\Http\Controllers\API\ApiProtectedController;
 use App\Model\ContactInfo;
 use App\Model\Contact;
-use App\Http\Controllers\API\Transformer\ContactTransformer;
+use App\Http\Controllers\API\Transformer\ContactInfoTransformer;
 
 class ContactsInfoController extends ApiProtectedController
 {

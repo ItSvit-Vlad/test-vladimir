@@ -1,1 +1,81 @@
-<div class="container cont-wrap"><nav class=top-link><ul><li>Welcome Brian</li><li><a href=#>Log out</a></li></ul></nav><div class=cont-head><h1>My Contacts</h1><button class=add>Add contact</button></div><ul class=cont-list><!--<li class="empty">You don't have any contacts yet. <a href="#">Add one</a></li>--><li><a href=javascript:>John Smith</a></li><li><a href=javascript:>Emma Jones</a></li><li><a href=javascript:>Trey Anastasio</a></li></ul></div><div id=viewContact class="modal fade" role=dialog><div class=modal-dialog><div class=modal-content><div class=modal-header><button type=button class=close data-dismiss=modal>&times;</button></div><div class=modal-body><h4>John Smith</h4><ul class=email-list><li>johnsmith@gmail.com</li><li>johnsmith@gmail.com</li></ul><div class=action><button class=edit>Edit</button> <button class=delete>Delete contact</button></div></div></div></div></div><div id=editContact class="modal fade" role=dialog><div class=modal-dialog><div class=modal-content><div class=modal-header><button type=button class=close data-dismiss=modal>&times;</button></div><div class=modal-body><h4>Edit John Smith</h4><form><div class=form-group><input placeholder="Enter first name" name=fname type=text class=form-control value=John></div><div class=form-group><input placeholder="Enter last name" name=lname type=text class=form-control value=Smith></div><div class=email-fields><div class=form-group><input placeholder="Enter email" name=email[] type=text class=form-control value=johnsmith@gmail.com> <span>Remove</span></div></div><div class=add><a href=javascript:>Add email</a></div><div class=action><button class=save>Save</button> <button class=cancel>Cancel</button></div></form><div id=addBlank><div class=form-group><input placeholder="Enter email" name=email[] type=text class=form-control> <span>Remove</span></div></div></div></div></div></div><script type=text/ng-template id=myModalContent.html><div class="modal-header"> <h3 class="modal-title" id="modal-title">I'm a modal!</h3> </div> <div class="modal-body" id="modal-body"> <ul> <li ng-repeat="item in $ctrl.items"> <a href="#" ng-click="$event.preventDefault(); $ctrl.selected.item = item">{{ item }}</a> </li> </ul> Selected: <b>{{ $ctrl.selected.item }}</b> </div> <div class="modal-footer"> <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button> <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button> </div></script>
+<div class="customModal t-all" ng-class="{active:customModal}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" ng-click="closeCustomModal()">&times;</button>
+                </div>
+                <div class="modal-body" ng-if="modalContactView === 'list'">
+                    <h4>{{curContact.first}} {{curContact.last}}</h4>
+                    <ul class="email-list">
+                        <li ng-repeat="email in curContact.emails">{{email.email}}</li>
+                    </ul>
+                    <div class="action">
+                        <button class="edit" ng-click="editContact()">Edit</button>
+                        <button class="delete" ng-click="contactDelete(curContact.id)" >Delete contact</button>
+                        <button class="cancel" ng-click="closeCustomModal()">Cancel</button>
+                    </div>
+                </div>
+                <div class="modal-body" ng-if="modalContactView === 'edit'">
+                    <h4>Edit {{curContact.first}} {{curContact.last}}</h4>
+                        <form>
+                            <div class="form-group">
+                                <input placeholder="Enter first name" name="fname" type="text" ng-model="curContact.first" class="form-control" value="{{curContact.first}}">
+                            </div>
+                            <div class="form-group">
+                                <input placeholder="Enter last name" name="lname" type="text" ng-model="curContact.last" class="form-control" value="{{curContact.last}}">
+                            </div>
+                            <div class="email-fields" ng-repeat="email in curContact.emails">
+                                <div class="form-group">
+                                    <input placeholder="Enter email" name="email[]" type="text" ng-model="email.email" class="form-control" value="{{email.email}}" />
+                                    <span ng-click="removeMail($index)">Remove</span>
+                                </div>
+                            </div>
+                            <div class="add"><a ng-click="addMail()">Add email</a></div>
+                            <div class="action">
+                                <button class="save" ng-click="editContactSave()">Save</button>
+                                <button class="cancel" ng-click="closeCustomModal()">Cancel</button>
+                            </div>
+                        </form>
+                </div>
+                <div class="modal-body" ng-if="modalContactView === 'add'">
+                    <h4>Add {{newContact.first}} {{newContact.last}}</h4>
+                        <form>
+                            <div class="form-group">
+                                <input placeholder="Enter first name" name="fname" type="text" ng-model="newContact.first" class="form-control" value="{{newContact.first}}">
+                            </div>
+                            <div class="form-group">
+                                <input placeholder="Enter last name" name="lname" type="text" ng-model="newContact.last" class="form-control" value="{{newContact.last}}">
+                            </div>
+                            <div class="email-fields" ng-repeat="email in newContact.emails">
+                                <div class="form-group">
+                                    <input placeholder="Enter email" name="email[]" type="text" ng-model="email.email" class="form-control" value="{{email.email}}" />
+                                    <span ng-click="removeNewMail($index)">Remove</span>
+                                </div>
+                            </div>
+                            <div class="add"><a ng-click="addNewMail()">Add email</a></div>
+                            <div class="action">
+                                <button class="save" ng-click="contactAddSave(newContact)">Save</button>
+                                <button class="cancel" ng-click="closeCustomModal()">Cancel</button>
+                            </div>
+                        </form>
+                </div>
+            </div>
+        </div>
+</div>
+
+<div class="container cont-wrap">
+    <nav class="top-link">
+        <ul>
+            <li class="user">Welcome <span>{{user}}</span></li>
+            <li><a ng-click="logout()">Log out</a></li>
+        </ul>
+    </nav>
+    <div class="cont-head">
+        <h1>My Contacts</h1>
+        <button class="add" ng-click="contactAdd()">Add contact</button>
+    </div>
+    <ul	class="cont-list">
+        <li ng-if="proposition">You don't have any contacts yet. <a ng-click="contactAdd()">Add one</a></li>
+        <li ng-repeat="contact in contacts"><a ng-click="openCustomModal(); getContact(contact)">{{contact.first_name}} {{contact.last_name}}</a></li>
+    </ul>
+</div>

@@ -29,7 +29,7 @@ $api->version('v1',  ['prefix' => 'api'], function ($api) {
         $api->get('user', 'App\Http\Controllers\API\AuthController@getAuthenticatedUser');
 
         $api->get('contacts', 'App\Http\Controllers\API\ContactsController@index');
-        $api->post('contacts', 'App\Http\Controllers\API\ContactsController@store');
+        $api->put('contactsNew', 'App\Http\Controllers\API\ContactsController@store');
         $api->get('contacts/{id}', 'App\Http\Controllers\API\ContactsController@show');
         $api->delete('contacts/{id}', 'App\Http\Controllers\API\ContactsController@destroy');
         $api->put('contacts/{id}', 'App\Http\Controllers\API\ContactsController@update');
