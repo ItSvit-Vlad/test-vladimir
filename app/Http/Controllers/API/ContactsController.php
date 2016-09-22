@@ -11,11 +11,6 @@ use App\Http\Controllers\API\Transformer\ContactTransformer;
 
 class ContactsController extends ApiProtectedController
 {
-
-    public function __construct(Request $request)
-    {
-        dd($request);
-    }
     /**
      * Show all contacts
      *

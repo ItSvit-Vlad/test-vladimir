@@ -3,9 +3,9 @@ angular.module('testApp').controller('RegisterController', [
     '$location',
     '$http',
     '$cookies',
-    function($scope, $location, $http, $cookies){
+    '$uibModal',
+    function($scope, $location, $http, $cookies, $uibModal){
         console.log('RegisterController');
-
         var loginBody = angular.element( document.body );
         loginBody.addClass('register');
 

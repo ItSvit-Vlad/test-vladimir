@@ -1,21 +1,22 @@
 
-var testApp = angular.module("testApp", ["ngRoute","ngCookies"]);
+var testApp = angular.module("testApp", ["ngRoute","ngCookies", "angular-jwt", "angular-storage", 'ngSanitize', 'ui.bootstrap']);
 //
-testApp.config(['$routeProvider', '$httpProvider',function($routeProvider, $httpProvider) {
+testApp.config(['$routeProvider', '$httpProvider','jwtInterceptorProvider', function($routeProvider, $httpProvider, jwtInterceptorProvider) {
+
     $routeProvider
-        .when("/login", {
-            templateUrl : "app/template/login.html",
-            controller : "LoginController",
-        })
-        .when("/register", {
-            templateUrl : "app/template/register.html",
-            controller : "RegisterController",
-        })
-        .when("/dashboard", {
-            templateUrl : "app/template/dashboard.html",
-            controller : "DashboardController",
-        })
-        .otherwise('/login');
+    .when("/login", {
+        templateUrl : "app/template/login.html",
+        controller : "LoginController",
+    })
+    .when("/register", {
+        templateUrl : "app/template/register.html",
+        controller : "RegisterController",
+    })
+    .when("/dashboard", {
+        templateUrl : "app/template/dashboard.html",
+        controller : "DashboardController",
+    })
+    .otherwise('/login');
 
     $httpProvider.interceptors.push(['$q', '$location', '$cookies', function ($q, $location, $cookies) {
         return {
@@ -39,8 +40,8 @@ testApp.config(['$routeProvider', '$httpProvider',function($routeProvider, $http
 
 }]);
 
-// //Check user authentication, if true login page is not available
-testApp.run(['$rootScope', '$location', '$cookies', function($rootScope, $location, $cookies) {
+// Check user authentication, if true login page is not available
+testApp.run(['$rootScope', '$location', '$cookies', 'jwtHelper', function($rootScope, $location, $cookies, jwtHelper ) {
     $rootScope.$on('$locationChangeStart', function(ev, next, current) {
         var token = $cookies.get('token');
         if(next.search('/dashboard') !== -1){
@@ -54,6 +55,7 @@ testApp.run(['$rootScope', '$location', '$cookies', function($rootScope, $locati
     });
 
 }]);
+
 
 
 
